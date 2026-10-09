@@ -1,0 +1,24 @@
+[package]
+name = "wbu-widescreen-fix"
+version = "1.0.1"
+description = "Widescreen, borderless window and Hor+ FOV fix for Wakeboarding Unleashed (PC, 2003)"
+license = "MIT"
+edition = "2024"
+
+# Builds d3d8.dll: drop it next to Game\WBU.EXE. Build with --target i686-pc-windows-msvc (the game is 32-bit).
+[lib]
+name = "d3d8"
+crate-type = ["cdylib"]
+
+[dependencies]
+windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_System_Memory", "Win32_System_LibraryLoader", "Win32_System_SystemServices", "Win32_UI_WindowsAndMessaging", "Win32_Graphics_Gdi", "Win32_System_SystemInformation", "Win32_System_Threading", "Win32_Media", "Win32_UI_Input_KeyboardAndMouse"] }
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[profile.dev]
+panic = "abort"
